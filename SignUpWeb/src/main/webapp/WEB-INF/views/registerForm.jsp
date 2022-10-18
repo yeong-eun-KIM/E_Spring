@@ -71,7 +71,7 @@
 	<title>회원가입</title>
 </head>
 <body>
-<form action="<c:url value="/register/save/"/>" method="post" onsubmit="return formCheck(this)">
+<form action="<c:url value="/register/save2/"/>" method="post" onsubmit="return formCheck(this)">
 		<div class="title">Register</div>
 		<div id="msg" class="msg"></div>
 		

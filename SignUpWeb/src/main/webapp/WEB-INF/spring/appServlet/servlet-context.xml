@@ -23,6 +23,12 @@
 	
 	<context:component-scan base-package="kr.co.ezensignup" />
 	
-	
-	
+	<!-- 뷰 컨트롤러 등록 (get 요청만 가능) 
+	<mvc:view-controller path="/register/add2" view-name="registerForm"></mvc:view-controller>
+	-->
+
 </beans:beans>
+
+
+
+
