@@ -27,6 +27,14 @@
 			</tr>
 		</c:forEach>
 	</table>
+		<h4>1에서 100까지 정수 중 홀수의 합 풀이</h4>
+		<c:forEach begin="1" end="100" var="j">
+			<c:if test="${j mod 2 ne 0 }">
+				<c:set var="sumSolve" value="${sumSolve + j }"></c:set>
+			</c:if>
+		</c:forEach>
+		SumSolve : ${sumSolve }
+	
 		<h4>1에서 100까지 정수 중 홀수의 합</h4>
 		<c:forEach begin="1" end="100" var="i" step="1">
 			<c:if test="${i mod 2 eq 1 }">
