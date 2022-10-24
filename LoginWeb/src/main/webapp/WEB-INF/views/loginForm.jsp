@@ -60,7 +60,7 @@
   <title>Login</title>
 </head>
 <body>
-	<form action="/satelite/login/login" method="post" onsubmit="return formCheck(this)">
+	<form action="<c:url value='/login/login' />" method="post" onsubmit="return formCheck(this)">
 		<h3 id="title">Login</h3>
 		<div id="msg">
 			<c:if test="${ not empty param.msg }">
