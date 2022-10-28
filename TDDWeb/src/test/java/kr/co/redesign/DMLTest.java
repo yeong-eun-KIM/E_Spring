@@ -29,7 +29,7 @@ public class DMLTest {
 		assertTrue(conn != null);
 	}
 	
-	@Test
+	//@Test
 	public void insertUserTest() throws SQLException {
 		User user = new User("ezen", "0111", "ezen", "ezen@gmail.com", new Date(), "fb", new Date());
 		deleteAll();
@@ -51,9 +51,14 @@ public class DMLTest {
 	public int insertUser(User user) throws SQLException {
 		Connection conn = ds.getConnection();
 		
+		
+		// 입력값에 사용된 물음표(?)를 인파라미터라고 함
+		// 정확한 값을 나중에 채워주겠다는 뜻임
 		String sql = "insert into t_user values (?,?,?,?,?,?,now())";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
+		// 인파라미터 설정시 데이터 타입에 맞는 set메서드를 사용함
+		// set메서드는 데이터 타입별로 다양하게 준비되어 있음
 		pstmt.setString(1, user.getId());
 		pstmt.setString(2, user.getPwd());
 		pstmt.setString(3, user.getName());
@@ -61,12 +66,12 @@ public class DMLTest {
 		pstmt.setDate(5, new java.sql.Date(user.getBirth().getTime()));
 		pstmt.setString(6, user.getSns());
 		
-		int rowCnt = pstmt.executeUpdate();
+		int rowCnt = pstmt.executeUpdate(); //insert, update, delete
 		
 		return rowCnt;
 	}
 	
-	@Test
+	//@Test
 	public void selectUserTest() throws SQLException {
 		deleteAll();
 		User user = new User("ezen", "0111", "ezen", "ezen@gmail.com", new Date(), "fb", new Date());
@@ -98,4 +103,68 @@ public class DMLTest {
 		return null;
 	}
 	
+	//@Test
+	public void deleteUserTest() throws SQLException {
+		deleteAll();
+		int rowCnt = deleteUser("ezen");
+		assertTrue(rowCnt == 0);
+		
+		User user = new User("ezen4", "0111", "ezen4", "ezen4@gamil.com", new Date(), "fb", new Date());
+		rowCnt = insertUser(user);
+		assertTrue(rowCnt == 1);
+		
+		rowCnt = deleteUser(user.getId());
+		assertTrue(rowCnt == 1);
+		
+//		assertTrue(selectUser(user.getId()) == null);
+	}
+	
+	
+	public int deleteUser(String id) throws SQLException {
+		Connection conn = ds.getConnection();
+		
+		String sql = "delete from t_user where id= ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id);
+		
+//		int rowCnt = pstmt.executeUpdate();
+//		return rowCnt;
+		
+		return pstmt.executeUpdate();
+	}
+	
+	@Test
+	public void UpdateUserTest() throws SQLException {
+		User user = new User("ezen3", "0111", "ezen3", "ezen3@gamil.com", new Date(), "fb", new Date());
+		int rowCnt = insertUser(user);
+		assertTrue(rowCnt == 1 );
+		
+		user.setPwd("0112");
+		user.setName("ezen6");
+		user.setEmail("ezen6@gmail.com");
+		rowCnt = updateUser(user);
+		assertTrue(rowCnt == 1);
+		
+//		User user2 = selectUser(user.getId());
+//		System.out.println("user = " + user);
+//		System.out.println("user2 = " + user2);
+//		assertTrue(user.equals(user2));
+	}
+	
+	// 매개변수로 받은 사용자 정보로 t_user 테이블을 update하는 메서드
+	public int updateUser(User user) throws SQLException {
+		Connection conn = ds.getConnection();
+		
+		String sql = "update t_user" + "set pwd=?, name=?, email=?, birth=?, sns=?, reg_date=?"+"where id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, user.getPwd());
+		pstmt.setString(2, user.getName());
+		pstmt.setString(3, user.getEmail());
+		pstmt.setDate(4, new java.sql.Date(user.getBirth().getTime()));
+		pstmt.setString(5, user.getSns());
+		pstmt.setDate(6, new java.sql.Date(user.getReg_date().getTime()));
+		
+		int rowCnt = pstmt.executeUpdate();
+		return rowCnt;
+	}
 }
