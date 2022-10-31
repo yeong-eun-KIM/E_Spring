@@ -35,7 +35,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(birth, email, id, name, pwd, reg_date, sns);
+		return Objects.hash(birth, email, id, name, pwd, reg_date, sns, reg_date);
 	}
 
 

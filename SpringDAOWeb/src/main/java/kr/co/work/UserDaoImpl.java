@@ -75,7 +75,7 @@ public class UserDaoImpl implements UserDAO{
 		String sql = "INSERT INTO t_user values(?,?,?,?,?,?,now())";
 		try {
 			conn = ds.getConnection();
-			conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user.getId());
 			pstmt.setString(2, user.getPwd());
 			pstmt.setString(3, user.getName());
