@@ -42,7 +42,7 @@ public class UserDaoImpl implements UserDAO{
 				user.setPwd(rs.getString(2));
 				user.setName(rs.getString(3));
 				user.setEmail(rs.getString(4));
-				user.setBirth(new Date(rs.getDate(5).getTime()));
+				user.setBirth(new java.sql.Date(rs.getDate(5).getTime()));
 				user.setSns(rs.getString(6));
 				user.setReg_date(new Date(rs.getTimestamp(7).getTime()));
 			}
