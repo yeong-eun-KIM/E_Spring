@@ -34,4 +34,10 @@
 		order by reg_date desc, bno desc
 		limit #{pageSize} offset #{offset}
  	</select>
+ 	
+ 	<update id="increaseViewCnt" parameterType="int">
+ 		update t_board
+		set view_cnt = view_cnt +1
+		where bno = #{bno}
+ 	</update>
  </mapper>

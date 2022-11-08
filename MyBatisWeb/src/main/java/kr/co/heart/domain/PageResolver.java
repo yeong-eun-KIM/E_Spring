@@ -1,6 +1,6 @@
 package kr.co.heart.domain;
 
-public class pageResolver {
+public class PageResolver {
 	
 	private int totalCnt;	//게시물 총 개수
 	private int pageSize = 10;	//한 페이지 게시물 개수
@@ -14,18 +14,18 @@ public class pageResolver {
 	private boolean showNext = false;	//이후를 보여줄지 여부 (endPage == totalPage이면 false)
 	private boolean showPrev = false;	//이전을 보여줄지 여부 (beginPage != 1이면 true)
 	
-	public pageResolver(int totalCnt, Integer page) {
+	public PageResolver(int totalCnt, Integer page) {
 		this(totalCnt, page, 10);
 	}
 	
 	
-	public pageResolver(int totalCnt, Integer page, Integer pageSize) {
+	public PageResolver(int totalCnt, Integer page, Integer pageSize) {
 		this.totalCnt = totalCnt;
 		this.page = page;
 		this.pageSize = pageSize;
 		
 		this.totalPage = (int)Math.ceil(totalCnt/(double)pageSize);	//전체 페이지 개수
-		this.beginPage = page/NAV_SIZE * NAV_SIZE +1;	//첫 페이지 숫자
+		this.beginPage = (page-1)/NAV_SIZE * NAV_SIZE +1;	//첫 페이지 숫자
 		//28 / 10*10 +1
 		this.endPage = Math.min(this.beginPage + this.NAV_SIZE - 1, totalPage);
 		this.showPrev = beginPage !=1 ;

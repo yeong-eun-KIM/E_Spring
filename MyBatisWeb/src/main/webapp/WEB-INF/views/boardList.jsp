@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="loginId" value="${sessionScope.id }"/>
-<c:set var="loginout" value="${sessionScope.id == null? 'Login' : 'Logout' }"/>
+<c:set var="loginout" value="${sessionScope.id == null? 'Login' : 'id:'+= loginId }"/>
 <c:set var="loginoutlink" value="${sessionScope.id == null? '/login/login' : '/login/logout'}" />
 <!DOCTYPE html>
 <html>
@@ -33,7 +33,7 @@
 			outline: none;
 		}
 		
-		.board-contatiner {
+		.board-container {
 			width: 60%;
 			height: 1200px;
 			margin: 0 auto;
@@ -72,6 +72,7 @@
 		
 		td{
 			color: rgb(53,53,53);
+			
 		}
 		
 		.no {
@@ -85,12 +86,12 @@
 		td.title {
 			text-align: left;
 		}
-		td.writer{
-			text-align: left;
+/* 		td.writer{
+			text-align: center;
 		}
 		td.viewcnt{
-			text-align: right;
-		}
+			text-align: center;
+		} */
 		td.title:hover{
 			text-decoration:  underline;
 		}
@@ -101,6 +102,20 @@
 			align-items: center;
 			
 		}
+		.page {
+			color: black;
+			padding: 6px;
+			margin-right: 10px;
+		}
+		
+		.paging-container{
+			width: 100%;
+			height: 70px;
+			display: flex;
+			margin-top: 50px;
+			margin: auto;
+		}
+		
 	</style>
 	
 
@@ -122,7 +137,7 @@
 	</script>
 	
 	<div style="text-align: center;">
-		<div class="board-contatiner">
+		<div class="board-container">
 			<div class="search-container">
 				<form>
 				
@@ -142,20 +157,25 @@
 						<tr>
 							<td class="no">${boardDto.bno }</td>
 							<td class="title">
-								<a href="">
+								<a href='<c:url value="/board/read?bno=${boardDto.bno }&page=${ page }&pageSize=${pageSize }" />'>
 									${boardDto.title }
 								</a>
 							</td>
 							<td class="writer">
 								<a href="">${boardDto.writer }</a>
+							</td>
 <%--  						<c:choose>
 							<c:when test=""> --%>
-							<td class="regdate"><fmt:formatDate value="${boardDto.reg_date }" pattern="yyyy-MM-dd" type="date"/><td>
+							<td class="regdate">
+								<fmt:formatDate value="${boardDto.reg_date }" pattern="yyyy-MM-dd" type="date"/>
+							</td>
 <%-- 							</c:when>
-						</c:choose> --%>
-							<td class="viewcnt">${boardDto.view_cnt }</td>
-					</c:forEach>
+							</c:choose> --%>
+							<td class="viewcnt">
+							${boardDto.view_cnt }
+							</td>
 						</tr>
+					</c:forEach>
 				</table>
 				
 				<br>
@@ -164,10 +184,20 @@
 						<c:if test="${totalCnt == null || totalCnt == 0 }">
 							<div>게시물이 없습니다.</div>
 						</c:if>
+					<c:if test="${totalCnt != null || totalCnt != 0 }">
+						<c:if test="${pr.showPrev }">
+								<a class="page" href="<c:url value="/board/list/?page=${pr.beginPage -1 }"></c:url>">이전</a>
+						</c:if>
+						<c:forEach var="i" begin="${pr.beginPage }" end="${pr.endPage }" >
+							<a class="page" href="<c:url value='/board/list?page=${i }'/>">${i }</a>
+						</c:forEach>
+						<c:if test="${pr.showNext }">
+							<a class="page" href="<c:url value="/board/list/?page=${pr.endPage +1 }"></c:url>">다음</a>
+						</c:if>						
+					</c:if>
 					</div>
 				</div>
 		</div>
 	</div>
-
 </body>
 </html>

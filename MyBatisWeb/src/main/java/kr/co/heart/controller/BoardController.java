@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.heart.domain.BoardDto;
-import kr.co.heart.domain.pageResolver;
+import kr.co.heart.domain.PageResolver;
 import kr.co.heart.service.BoardService;
 
 @Controller
@@ -25,6 +26,28 @@ public class BoardController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	//@PostMapping("/remove")
+	public String remove(Integer bno, Integer page, Integer pageSize) {
+		
+		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/read")
+	public String read(Integer bno, Integer page, Integer pageSize, Model m) {
+		try {
+			BoardDto boardDto = boardService.read(bno);
+			//m.addAttribute("boardDto",boardDto); 아래 sentence와 동일
+			m.addAttribute(boardDto);
+			m.addAttribute("page",page);
+			m.addAttribute("pageSize", pageSize);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/board/list";
+		}
+		return "board";
+	}
 	
 	@GetMapping("/list")
 	public String list(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10")Integer pageSize, Model m, HttpServletRequest request) {
@@ -39,7 +62,7 @@ public class BoardController {
 			int totalCnt = boardService.getCount();
 			m.addAttribute("totalCnt",totalCnt);
 			
-			pageResolver pageResolver = new pageResolver(totalCnt, page, pageSize);
+			PageResolver pageResolver = new PageResolver(totalCnt, page, pageSize);
 			if(page <0 || page > pageResolver.getTotalCnt()) page=1;
 			if(pageSize <0 || pageSize > 50) pageSize=10;
 			
@@ -51,6 +74,9 @@ public class BoardController {
 			List<BoardDto> list = boardService.getPage(map);
 			m.addAttribute("list",list);
 			m.addAttribute("pr",pageResolver);
+			
+			m.addAttribute("page",page);
+			m.addAttribute("pageSize", pageSize);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
