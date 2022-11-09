@@ -18,6 +18,14 @@
  		delete from t_board
  	</delete>
  	
+	<delete id="delete" parameterType="map">
+ 		delete from t_board where bno = #{bno} and writer = #{writer}
+ 	</delete>
+ 	
+	<delete id="deleteForAdmin">
+ 		delete from t_board where bno = #{bno}
+ 	</delete>  	
+ 	
  	<insert id="insert" parameterType="BoardDto" >
  		insert into t_board
  			(title, content, writer) 
@@ -39,5 +47,11 @@
  		update t_board
 		set view_cnt = view_cnt +1
 		where bno = #{bno}
+ 	</update>
+ 	
+ 	<update id="update" parameterType="BoardDto">
+ 	update t_board
+	SET title=#{title}, content=#{content}, up_date = now()
+	WHERE bno=#{bno} and writer = #{writer}
  	</update>
  </mapper>
