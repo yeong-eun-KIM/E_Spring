@@ -128,6 +128,44 @@
 		.btn-write:hover{
 			text-decoration: underline;
 		}
+		.search-form {
+			height: 37px;
+			display: flex;
+		}
+		.search-option {
+			width: 100px;
+			height: 100%;
+			outline: none;
+			margin-right: 5px;
+			border: 1px solid #ccc;
+			color: gray;
+			
+		}
+		.search-input {
+			color: gray;
+			background-color: white;
+			border: 1px solid #ccc;
+			height: 100%;
+			width: 300px;
+			padding: 5px 7px;
+			font-size: 15px;
+		}
+		.search-input::placeholder{
+			color: red;
+		}
+		.search-button{
+			width: 20%;
+			height: 100%;
+			background-color: rgb(22,22,22);
+			display: flex;
+			color: rgb(209,209,209);
+			align-items: center;
+			justify-content: center;
+			font-size: 15px;
+		}
+		.search-button:hover {
+			color: rgb(165,165,165);
+		}
 	</style>
 	
 
@@ -156,8 +194,14 @@
 	<div style="text-align: center;">
 		<div class="board-container">
 			<div class="search-container">
-				<form>
-				
+				<form action='<c:url value="/board/list"/>' class="search-form" method="get">
+					<select class="search-option" name="option">
+						<option value="A" ${option == 'A'? "selected" : ""}>제목+내용</option>
+						<option value="T" ${option == 'T'? "selected" : ""}>제목</option>
+						<option value="W" ${option == 'W'? "selected" : ""}>작성자</option>
+					</select>
+					<input type="text" name="keyword" class="search-input" value="${param.keyword }" placeholder="검색어를 입력하세요">
+					<input type="submit" class="search-button" value="검색">
 				</form>
 				<button id="writeBtn" class="btn-write" onclick="location.href='<c:url value='/board/write'/>'"><i classs="fa fa-pencil"></i>글쓰기</button>
 			</div>

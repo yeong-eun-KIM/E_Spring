@@ -14,6 +14,20 @@
  		where bno = #{bno}
  	</select>
  	
+ 	<select id="searchResultCnt" parameterType="SearchItem" resultType="int">
+ 		select count(*)
+		from t_board
+		where true and title like concat('%',#{keyword},'%')
+ 	</select>
+ 	
+ 	<select id="searchSelectPage" parameterType="SearchItem" resultType="BoardDto">
+	 	<include refid="selectFromBoard"/>
+		from t_board
+		where true and title like concat('%','Pioneering1','%')
+		order by reg_date desc, bno desc
+		limit #{pageSize} offset #{offset}
+ 	</select>
+ 	
  	<delete id="deleteAll">
  		delete from t_board
  	</delete>
