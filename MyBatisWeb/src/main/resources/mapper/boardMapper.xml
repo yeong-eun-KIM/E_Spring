@@ -20,10 +20,10 @@
 		where true and title like concat('%',#{keyword},'%')
  	</select>
  	
- 	<select id="searchSelectPage" parameterType="SearchItem" resultType="BoardDto">
-	 	<include refid="selectFromBoard"/>
+ 	<select id="searchResultPage" parameterType="SearchItem" resultType="BoardDto">
+	 	SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
 		from t_board
-		where true and title like concat('%','Pioneering1','%')
+		where true and title like concat('%',#{keyword},'%')
 		order by reg_date desc, bno desc
 		limit #{pageSize} offset #{offset}
  	</select>

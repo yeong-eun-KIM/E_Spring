@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.heart.domain.BoardDto;
 import kr.co.heart.domain.PageResolver;
+import kr.co.heart.domain.SearchItem;
 import kr.co.heart.service.BoardService;
 
 @Controller
@@ -120,7 +121,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/list")
-	public String list(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10")Integer pageSize, Model m, HttpServletRequest request) {
+	public String list(SearchItem sc, Model m, HttpServletRequest request) {
 		
 		if(!loginCheck(request))
 			return "redirect:/login/login?toURL="+request.getRequestURL();
@@ -129,24 +130,17 @@ public class BoardController {
 			
 //			if(page==null) page=1;
 //			if(pageSize==null) pageSize=10;
-			int totalCnt = boardService.getCount();
+			
+			int totalCnt = boardService.getSearchResultCnt(sc);
+			
+			PageResolver pageResolver = new PageResolver(totalCnt, sc);
+						
+			List<BoardDto> list = boardService.getSearchResultPage(sc);
+			
 			m.addAttribute("totalCnt",totalCnt);
-			
-			PageResolver pageResolver = new PageResolver(totalCnt, page, pageSize);
-			if(page <0 || page > pageResolver.getTotalCnt()) page=1;
-			if(pageSize <0 || pageSize > 50) pageSize=10;
-			
-			
-			Map map = new HashMap();
-			map.put("offset", (page-1)*pageSize);
-			map.put("pageSize", pageSize);
-			
-			List<BoardDto> list = boardService.getPage(map);
 			m.addAttribute("list",list);
 			m.addAttribute("pr",pageResolver);
 			
-			m.addAttribute("page",page);
-			m.addAttribute("pageSize", pageSize);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

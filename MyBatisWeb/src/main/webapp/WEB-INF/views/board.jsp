@@ -85,8 +85,8 @@
 	<script type="text/javascript">
 		$(document).ready(function() {	/*main()*/
 			$("#listBtn").on("click",function(){
-
-				location.href = "<c:url value='/board/list?page=${page}&pageSize=${pageSize}' />";
+				//location.href = "<c:url value='/board/list?page=${page}&pageSize=${pageSize}' />";
+				history.back();
 			})
 			
 			$("#removeBtn").on("click",function(){

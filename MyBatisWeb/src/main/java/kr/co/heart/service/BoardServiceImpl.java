@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.heart.dao.BoardDao;
 import kr.co.heart.domain.BoardDto;
+import kr.co.heart.domain.SearchItem;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -52,5 +53,17 @@ public class BoardServiceImpl implements BoardService {
 	public int modify(BoardDto boardDto) throws Exception {
 		// TODO Auto-generated method stub
 		return boardDao.update(boardDto);
+	}
+
+	@Override
+	public int getSearchResultCnt(SearchItem sc) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDao.searchResultCnt(sc);
+	}
+
+	@Override
+	public List<BoardDto> getSearchResultPage(SearchItem sc) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDao.searchResultPage(sc);
 	}
 }
