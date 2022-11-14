@@ -80,7 +80,9 @@ public class SearchItem {
 	}
 
 	public Integer getOffset() {
-		return (page-1)*pageSize;
+		int result = (page-1)*pageSize;
+		if(result < 0 ) result = 0;
+		return result;
 	}
 
 	

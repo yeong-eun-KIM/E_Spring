@@ -196,9 +196,9 @@
 			<div class="search-container">
 				<form action='<c:url value="/board/list"/>' class="search-form" method="get">
 					<select class="search-option" name="option">
-						<option value="A" ${pr.sc.option == 'A' || pr.sc.option ==''? "selected" : ""}>제목+내용</option>
-						<option value="T" ${pr.sc.option == 'T'? "selected" : ""}>제목</option>
-						<option value="W" ${pr.sc.option == 'W'? "selected" : ""}>작성자</option>
+						<option value="A" ${pr.sc.option eq 'A' || pr.sc.option eq''? "selected" : ""}>제목+내용</option>
+						<option value="T" ${pr.sc.option eq 'T'? "selected" : ""}>제목</option>
+						<option value="W" ${pr.sc.option eq 'W'? "selected" : ""}>작성자</option>
 					</select>
 					<input type="text" name="keyword" class="search-input" value="${param.keyword }" placeholder="검색어를 입력하세요">
 					<input type="submit" class="search-button" value="검색">
@@ -219,7 +219,7 @@
 						<tr>
 							<td class="no">${boardDto.bno }</td>
 							<td class="title">
-								<a href='<c:url value="/board/read?${pr.sc.queryString }&bno=${boardDto.bno }" />'>
+								<a href='<c:url value="/board/read${pr.sc.queryString }&bno=${boardDto.bno }" />'>
 									${boardDto.title }
 								</a>
 							</td>
