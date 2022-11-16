@@ -99,7 +99,7 @@
 			}
 			
 			let toHtml = function(comments){
-			let tmp += '<ul>'
+			let tmp = "<ul>"
 			
 			comments.forEach(function(comment){
 				tmp += '<li data-cno=>' + comment.cno

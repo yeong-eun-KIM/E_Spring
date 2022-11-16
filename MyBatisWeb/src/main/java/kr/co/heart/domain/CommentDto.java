@@ -17,7 +17,7 @@ public class CommentDto {
 	}
 
 	public CommentDto(Integer bno, Integer pcno, String comment, String commenter) {
-		super();
+		//super();
 		this.bno = bno;
 		this.pcno = pcno;
 		this.comment = comment;

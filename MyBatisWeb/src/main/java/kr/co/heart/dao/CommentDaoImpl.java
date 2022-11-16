@@ -1,6 +1,8 @@
 package kr.co.heart.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +18,23 @@ public class CommentDaoImpl implements CommentDao {
 	private static String namespace = "kr.co.heart.dao.CommentMapper.";
 	
 	@Override
-	public int deleteAll(Integer bno) throws Exception {
+	public int delete(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
-		return session.delete(namespace+"deleteAll");
+		return session.delete(namespace+"delete",bno);
 	}
 
 	@Override
 	public List<CommentDto> selectAll(Integer bno) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectList(namespace+"selectAll", bno);
+	}
+
+	@Override
+	public int delete(Integer cno, String commenter) throws Exception {
+		Map map = new HashMap();
+		map.put("cno",cno);
+		map.put("commenter", commenter);
+		return session.delete(namespace+"delete", map);
 	}
 
 }

@@ -23,7 +23,7 @@ public class SimpleRestContoller {
 		return "test";
 	}
 	
-	//@ResponseBody
+	@ResponseBody
 	@PostMapping("/send")
 	public Person test(@RequestBody Person p) {
 		System.out.println("p = "+p);

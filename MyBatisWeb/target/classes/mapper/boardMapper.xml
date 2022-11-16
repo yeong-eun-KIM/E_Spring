@@ -85,4 +85,10 @@
 	SET title=#{title}, content=#{content}, up_date = now()
 	WHERE bno=#{bno} and writer = #{writer}
  	</update>
+ 	
+ 	<update id="updateCommentCnt" parameterType="map">
+		update t_board 
+		set comment_cnt = comment_cnt + #{cnt}
+		where bno = #{bno}
+ 	</update>
  </mapper>

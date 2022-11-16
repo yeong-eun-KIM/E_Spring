@@ -24,4 +24,6 @@ public interface BoardDao {
 	
 	int searchResultCnt(SearchItem sc) throws Exception;
 	List<BoardDto> searchResultPage(SearchItem sc) throws Exception;
+
+	int updateCommentCnt(Integer bno, int cnt) throws Exception;
 }

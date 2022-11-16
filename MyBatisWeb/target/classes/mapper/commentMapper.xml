@@ -16,4 +16,7 @@
 	where bno = #{bno}
 	</delete>
 	
+	<delete id="delete" parameterType="map">
+	delete from t_comment where cno = #{cno} and commenter = #{commenter}
+	</delete>
 </mapper>
