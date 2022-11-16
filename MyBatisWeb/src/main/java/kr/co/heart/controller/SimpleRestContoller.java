@@ -5,10 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.heart.domain.Person;
 
 @Controller
+//@RestController
 public class SimpleRestContoller {
 
 	@GetMapping("/ajax")
@@ -16,7 +18,12 @@ public class SimpleRestContoller {
 		return "ajax";
 	}
 	
-	@ResponseBody
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
+	
+	//@ResponseBody
 	@PostMapping("/send")
 	public Person test(@RequestBody Person p) {
 		System.out.println("p = "+p);

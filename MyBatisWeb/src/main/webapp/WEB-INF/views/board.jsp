@@ -68,6 +68,9 @@
 		.btn:hover {
 			text-decoration: underline;
 		}
+		#commentList li{
+			width:100%; 
+		}
 	</style>
 	<title>게시글 조회</title>
 </head>
@@ -83,7 +86,38 @@
 		</ul>
 	</div>
 	<script type="text/javascript">
-		$(document).ready(function() {	/*main()*/
+			let bno = 156;
+			let showList = function(bno){
+				$.ajax({
+					type: 'get',
+					url: '/heart/comments?bno='+bno,
+					success : function(result){
+						$("#commentList").html(toHtml(result))
+					},
+					error : function(){alert("error")}
+				})
+			}
+			
+			let toHtml = function(comments){
+			let tmp += '<ul>'
+			
+			comments.forEach(function(comment){
+				tmp += '<li data-cno=>' + comment.cno
+				tmp += 'data-bno=' + comment.bno
+				tmp += 'data-pcno=' + comment.pcno +'>'
+				tmp += 'commenter=<span class="commenter">'+comment.commenter +'</span>'
+				tmp += 'comment=<span class="comment">'+comment.comment +'</span>'
+				tmp += '</li>'
+			})
+				return tmp += "</ul>"
+			}
+			$(document).ready(function(){
+					$("#sendBtn").click(function(){
+						showList(bno)
+					})
+				//})
+			
+		//$(document).ready(function() {	/*main()*/
 			$("#listBtn").on("click",function(){
 				location.href = "<c:url value='/board/list${searchItem.queryString}' />";
 				//history.back();
@@ -172,6 +206,10 @@
 			</c:if>
 			<button type="button" id="listBtn" class="btn btn-list"><i class="fa fa-bars"></i>목록</button>
 		</form>
+		
+		<button id="sendBtn" type="button">SEND</button>
+		<div id ="commentList"></div>
+		
 	</div>
 	
 
