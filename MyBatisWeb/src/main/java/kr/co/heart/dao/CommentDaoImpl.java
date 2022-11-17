@@ -37,4 +37,14 @@ public class CommentDaoImpl implements CommentDao {
 		return session.delete(namespace+"delete", map);
 	}
 
+
+
+	@Override
+	public int insert(CommentDto commentDto) throws Exception {
+		// TODO Auto-generated method stub
+		return session.insert(namespace+"insert",commentDto);
+	}
+	
+	
+
 }

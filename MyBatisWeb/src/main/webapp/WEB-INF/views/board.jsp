@@ -68,9 +68,6 @@
 		.btn:hover {
 			text-decoration: underline;
 		}
-		#commentList li{
-			width:100%; 
-		}
 	</style>
 	<title>게시글 조회</title>
 </head>
@@ -87,6 +84,26 @@
 	</div>
 	<script type="text/javascript">
 			let bno = 156;
+			
+			$("#commentList").on("click",".delBtn",function(){
+				//commentList안에 있는 delBtn버튼에다가 클릭이벤트 걸어줌
+				//alert("삭제버튼 클릭됨")
+				let cno = $(this).parent().attr("data-cno")	//<li>태그는 <button>의 부모임
+				let bno = $(this).parent().attr("data-bno")	//attr 중 사용자 정의 attr을 선택함
+				
+				$.ajax({
+					type : 'DELETE',
+					url : '/heart/comments/'+cno+'?bno='+bno, 
+					success : function(result){
+						alert(result)
+						showList(bno)
+					},
+					error : function(){alert("error")}
+				})				
+			
+			})
+			
+			
 			let showList = function(bno){
 				$.ajax({
 					type: 'get',
@@ -99,14 +116,15 @@
 			}
 			
 			let toHtml = function(comments){
-			let tmp = "<ul>"
+			let tmp = "<ul style='display: block;' >"
 			
 			comments.forEach(function(comment){
-				tmp += '<li data-cno=>' + comment.cno
-				tmp += 'data-bno=' + comment.bno
-				tmp += 'data-pcno=' + comment.pcno +'>'
-				tmp += 'commenter=<span class="commenter">'+comment.commenter +'</span>'
-				tmp += 'comment=<span class="comment">'+comment.comment +'</span>'
+				tmp += '<li style="background-color: #f9f9fa;border-bottom:1px solid rgb(235,236,239); color:black;  width: 100%;" data-cno=' + comment.cno
+				tmp += ' data-bno=' + comment.bno
+				tmp += ' data-pcno=' + comment.pcno +'>'
+				tmp += ' <span class="commenter" style="width:100px;">'+comment.commenter +'</span>'
+				tmp += ' <span class="comment">'+comment.comment +'</span>'
+				tmp += ' <button class="delBtn">삭제</button>'
 				tmp += '</li>'
 			})
 				return tmp += "</ul>"

@@ -104,6 +104,6 @@ public class CommentDto {
 		return "CommentDto [cno=" + cno + ", bno=" + bno + ", pcno=" + pcno + ", comment=" + comment + ", commenter="
 				+ commenter + "]";
 	}
-	
-	
+
+		
 }
